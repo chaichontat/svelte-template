@@ -1,20 +1,36 @@
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+	extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
 	plugins: ['svelte3', '@typescript-eslint'],
-	ignorePatterns: ['*.cjs'],
+	ignorePatterns: [
+		'node_modules',
+		'build',
+		'.svelte-kit',
+		'*.cjs',
+		'svelte.config.js',
+		'vite.config.js'
+	],
 	overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
 	settings: {
 		'svelte3/typescript': () => require('typescript')
 	},
 	parserOptions: {
+		ecmaVersion: 2020,
 		sourceType: 'module',
-		ecmaVersion: 2020
+		tsconfigRootDir: __dirname,
+		extraFileExtensions: ['.svelte'],
+		project: ['./tsconfig.json', './prettier.config.cjs']
 	},
 	env: {
 		browser: true,
-		es2017: true,
+		es2020: true,
 		node: true
+	},
+	rules: {
+		'@typescript-eslint/no-non-null-assertion': 0,
+		'@typescript-eslint/ban-ts-comment': 0,
+		'@typescript-eslint/no-empty-function': 0,
+		'@typescript-eslint/no-explicit-any': 0
 	}
 };
